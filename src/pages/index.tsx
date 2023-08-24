@@ -22,6 +22,36 @@ export default function Home() {
     }
 
   }
+
+  type Todo = {
+    value: string;
+    readonly id: number;
+    checked: boolean;
+    removed: boolean;
+  };
+
+  const newTodo: Todo = {
+    id: new Date().getTime(),
+    checked: false,
+    removed: false,
+    value: ''
+  };
+
+  // setTodos((todos: any) => [newTodo, ...todos]);
+
+  // const handleRemove = (id: number, removed: boolean) => {
+  //   // setTodos((todos) => {
+  //   //   const newTodos = todos.map((todo: { id: number }) => {
+  //   //     if (todo.id === id) {
+  //   //       return { ...todo, removed };
+  //   //     }
+  //   //     return todo;
+  //   //   });
+
+  //     return newTodos;
+  //   });
+
+  // const deleteTodo = () => {}
   // const deleteTodo = (index: number) => {
   //   const newTodos = todos.filter((todo, todoIndex) => {
   //     return index !== todoIndex;
@@ -30,9 +60,14 @@ export default function Home() {
   //   setTodos(newTodos);
   // };
 
-  const test_5 = () =>{
-    window.confirm("削除しますか？");
+  const deleteTodo = (item: string,index: number) => {
+    window.confirm(item + index);
+
   }
+
+
+
+
 
 
   return (
@@ -47,7 +82,7 @@ export default function Home() {
           <div>
             <p className={styles.para} key={index}>{item}
             </p>
-            <button onClick={() => test_5()}>完了</button>
+            <button onClick={() => deleteTodo(item ,index)}>完了</button>
           </div>
         ))
         }
@@ -56,3 +91,10 @@ export default function Home() {
     </div>
   )
 }
+// }
+
+// function setTodos(arg0: (todos: any) => any[]) {
+//   // throw new Error('Function not implemented.');
+
+// }
+
