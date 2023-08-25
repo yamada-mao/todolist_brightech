@@ -8,42 +8,43 @@ type Todo = {
   comment: string;
 };
 
-type Filter = "all" | "completed" | "incomplete"; // フィルターオプションを追加
+// type Filter = "all" | "completed" | "incomplete"; // フィルターオプションを追加
 
 const App = () => {
   const [text, setText] = useState('');
   const [comment, setComment] = useState('');
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [filter, setFilter] = useState<Filter>("all");
+  // const [filter, setFilter] = useState<Filter>("all");
+  
+  const newTodo: Todo = {
+    value: text,
+    id: new Date().getTime(),
+    removed: false,
+    comment: comment,
+  };
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (text === "" || comment === "") {
       return;
     }
-    const newTodo: Todo = {
-      value: text,
-      id: new Date().getTime(),
-      removed: false,
-      comment: comment,
-    };
     setTodos([newTodo, ...todos]);
     setText('');
     setComment('');
   };
 
-  const filteredTodos = todos.filter((todo) => {
-    switch (filter) {
-      case "all":
-        return true;
-      case "completed":
-        return todo.removed;
-      case "incomplete":
-        return !todo.removed;
-      default:
-        return true;
-    }
-  });
+  // const filteredTodos = todos.filter((todo) => {
+    // switch (filter) {
+    //   case "all":
+    //     return true;
+    //   case "completed":
+    //     return todo.removed;
+    //   case "incomplete":
+    //     return !todo.removed;
+    //   default:
+    //     return true;
+    // }
+  // });
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
@@ -82,42 +83,45 @@ const App = () => {
           ></textarea>
         </div>
       </form>
-      <ol>
-        <p>ALL</p>
-        {filteredTodos.map((todo) => (
-          <li key={todo.id}>
-            {todo.value}
-            <button onClick={() => handleOnRemove(todo.id)}>
-              {todo.removed ? "未完了" : "完了"}
-            </button>
-            詳細: {todo.comment}
-          </li>
-        ))}
-      </ol>
 
-      <ol>
-        <p>完了</p>
-        {filteredTodos
-          .filter((todo) => todo.removed)
-          .map((todo) => (
+      <div className={styles.flex}>
+        <ol className={styles.ol}>
+          <p>ALL</p>
+          {todos.map((todo) => (
             <li key={todo.id}>
               {todo.value}
-              <button onClick={() => handleOnRemove(todo.id)}>完了</button>
+              <button onClick={() => handleOnRemove(todo.id)}>
+                {todo.removed ? "未完了" : "完了"}
+              </button>
+              詳細: {todo.comment}
             </li>
           ))}
-      </ol>
+        </ol>
 
-      <ol>
-        <p>未完了</p>
-        {filteredTodos
-          .filter((todo) => !todo.removed)
-          .map((todo) => (
-            <li key={todo.id}>
-              {todo.value}
-              <button onClick={() => handleOnRemove(todo.id)}>未完了</button>
-            </li>
-          ))}
-      </ol>
+        <ol className={styles.ol}>
+          <p>完了</p>
+          {todos
+            .filter((todo) => todo.removed)
+            .map((todo) => (
+              <li key={todo.id}>
+                {todo.value}
+                <button onClick={() => handleOnRemove(todo.id)}>完了</button>
+              </li>
+            ))}
+        </ol>
+
+        <ol className={styles.ol}>
+          <p>未完了</p>
+          {todos
+            .filter((todo) => !todo.removed)
+            .map((todo) => (
+              <li key={todo.id}>
+                {todo.value}
+                <button onClick={() => handleOnRemove(todo.id)}>未完了</button>
+              </li>
+            ))}
+        </ol>
+      </div>
     </div>
   );
 };
