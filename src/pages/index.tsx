@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import styles from '@/styles/Home.module.scss';
-
 type Todo = {
   value: string;
   readonly id: number;
@@ -11,6 +10,7 @@ type Todo = {
 // type Filter = "all" | "completed" | "incomplete"; // フィルターオプションを追加
 
 const App = () => {
+
   const [text, setText] = useState('');
   const [comment, setComment] = useState('');
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -109,7 +109,7 @@ const App = () => {
               </li>
             ))}
         </ol>
-
+      
         <ol className={styles.ol}>
           <p>未完了</p>
           {todos
@@ -123,6 +123,7 @@ const App = () => {
         </ol>
       </div>
     </div>
+  
   );
 };
 
