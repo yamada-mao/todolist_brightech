@@ -234,3 +234,13 @@
 // .container .para{
 //   color: red;
 // }
+
+.flex{
+  display: flex;
+  .ol{
+    width: 120px;
+    margin: 12px;
+    padding: 1rem;
+    border: solid;
+  }
+}
